@@ -9,10 +9,10 @@ app.use(express.json());
 app.use(router);
 
 sequelize
-  // .sync({ force: true })
-  .sync()
-  .then(() => {
-    Games.findAll().then((data) => {
+  .sync({ force: true })
+  // .sync()
+  .then(async () => {
+    await Games.findAll().then((data) => {
       if (!data.length) {
         Games.bulkCreate([
           { name: "Диабло" },
@@ -21,7 +21,7 @@ sequelize
         ]);
       }
     });
-    Users.findAll().then((data) => {
+    await Users.findAll().then((data) => {
       if (!data.length) {
         Users.bulkCreate([
           { name: "Костя", age: 19 },
@@ -30,7 +30,7 @@ sequelize
         ]);
       }
     });
-    Posts.findAll().then((data) => {
+    await Posts.findAll().then((data) => {
       if (!data.length) {
         Posts.bulkCreate([
           { title: "Заголовок", desc: "Описание", userId: 1, gameId: 1 },
